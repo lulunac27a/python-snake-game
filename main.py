@@ -5,6 +5,7 @@ import random
 # Game configuration variables
 delay = 0.1  # delay between each game loop iteration
 score = 0  # current score of the player
+length = 0  # current length of the snake
 high_score = 0  # highest score achieved in the game
 
 # Track the timestamp when the food was spawned/last eaten
@@ -97,8 +98,8 @@ window.onkeypress(
 
 
 def reset_game():  # function to reset the game state after a collision
-    # declare score and last_eat_time as global variables to modify them within the function
-    global score, last_eat_time
+    # declare score, last_eat_time, and length as global variables to modify them within the function
+    global score, last_eat_time, length
     time.sleep(1)  # pause for a short moment before resetting the game
     head.goto(0, 0)  # move the snake's head to the center of the window
     head.direction = "stop"  # stop the snake's movement
@@ -108,6 +109,7 @@ def reset_game():  # function to reset the game state after a collision
     segments.clear()  # clear the list of segments
 
     score = 0  # reset the score
+    length = 0  # reset the length of the snake
     last_eat_time = time.time()  # Reset the timer#reset the timer for food consumption
     pen.clear()  # clear the previous score display
     pen.write(
@@ -150,6 +152,7 @@ while True:  # main game loop
 
         # Add points to score
         score += base_points + bonus  # update the score with base points and bonus
+        length += 1  # increase the length of the snake
 
         # Reset the timer anchor for the next food piece
         last_eat_time = current_time  # update the last eat time to the current time
