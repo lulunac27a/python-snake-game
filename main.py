@@ -45,8 +45,8 @@ pen.penup()  # ensure the scoreboard turtle doesn't draw lines
 pen.hideturtle()  # hide the scoreboard turtle
 pen.goto(0, 260)  # position the scoreboard at the top of the window
 pen.write(
-    "Score: 0  High Score: 0", align="center", font=("Courier", 24, "normal")
-)  # display the initial score and high score
+    "Score: 0  High Score: 0, Length: 0", align="center", font=("Courier", 24, "normal")
+)  # display the initial score, high score, and length
 
 
 # 5. Functions to handle movement logic
@@ -98,8 +98,8 @@ window.onkeypress(
 
 
 def reset_game():  # function to reset the game state after a collision
-    # declare score, last_eat_time, and length as global variables to modify them within the function
-    global score, last_eat_time, length
+    # declare score, last_eat_time, length, and high_score as global variables to modify them within the function
+    global score, last_eat_time, length, high_score
     time.sleep(1)  # pause for a short moment before resetting the game
     head.goto(0, 0)  # move the snake's head to the center of the window
     head.direction = "stop"  # stop the snake's movement
@@ -110,13 +110,16 @@ def reset_game():  # function to reset the game state after a collision
 
     score = 0  # reset the score
     length = 0  # reset the length of the snake
+    high_score = max(
+        high_score, score
+    )  # update the high score if the current score is higher
     last_eat_time = time.time()  # Reset the timer#reset the timer for food consumption
     pen.clear()  # clear the previous score display
     pen.write(
-        f"Score: {score}  High Score: {high_score}",
+        f"Score: {score}  High Score: {high_score}  Length: {length}",
         align="center",
         font=("Courier", 24, "normal"),
-    )  # display the updated score and high score
+    )  # display the updated score, high score, and length
 
 
 # 7. Main Game Loop
@@ -180,10 +183,10 @@ while True:  # main game loop
         pen.clear()  # clear the previous score display
         # Optional: Displays the points earned on the scoreboard
         pen.write(
-            f"Score: {score} (+{base_points + bonus})  High: {high_score}",
+            f"Score: {score} (+{base_points + bonus})  High: {high_score}  Length: {length}",
             align="center",
             font=("Courier", 18, "normal"),
-        )  # display the updated score and high score on the scoreboard
+        )  # display the updated score, high score, and length on the scoreboard
 
     # Move the end segments first in reverse order to follow the head
     for index in range(
